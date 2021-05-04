@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 double doubleEachPerson = doubleTotalBill / intPax;
                 String stringShowBill = doubleTotalBill.toString();
                 String stringShowEachPerson = Double.toString(doubleEachPerson);
-                tvDisplayTotal.setText("Total Bill: " + stringShowBill + "\n" + "Each Pays: " + stringShowEachPerson);
+                if (etAmount.getText().toString().isEmpty() && etPax.getText().toString().isEmpty()) {
+                    tvDisplayTotal.setText("Please fill in all details");
+                    tvDisplayTotal.setTextColor(Color.RED);
+                    Toast.makeText(MainActivity.this, "Please input something", Toast.LENGTH_SHORT).show();
+                } else {
+                    tvDisplayTotal.setText("Total Bill: " + stringShowBill + "\n" + "Each Pays: " + stringShowEachPerson);
+                }
 
                 int checkRadioId = rgPayment.getCheckedRadioButtonId();
                 if(checkRadioId == R.id.radioButtonCash){
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 tvDisplayTotal.setText("");
                 tbtnSVS.setChecked(false);
                 tbtnGST.setChecked(false);
+                rgPayment.check(R.id.radioButtonCash);
             }
         });
 
